@@ -1,0 +1,497 @@
+.nav .nav-treeview {
+    padding-left: 1rem;
+}
+
+
+.select2-container--default .select2-selection--single {
+    height: 50px !important;
+    border: 1px solid #ced4da !important;
+    padding-top: 13px !important;
+}
+
+.dt-button {
+    background-color: #ff0000 !important;
+    /* Change to your desired color */
+    color: #ffffff !important;
+    /* Change the text color if needed */
+}
+
+
+.dt-buttons.btn-group>.btn-group:not(:last-child)>.btn,
+.dt-buttons.btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+    padding: 0.25rem 0.5rem !important;
+    font-size: .875rem !important;
+    line-height: 1.5 !important;
+    border-radius: 0.2rem !important;
+
+    color: #fff !important;
+    background-color: #f1f2f7 !important;
+    border-color: #f1f2f7 !important;
+    box-shadow: none !important;
+    margin-right: 5px;
+    margin-bottom: 10px !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    padding: 10px 20px !important;
+}
+
+.buttons-print {
+    padding: 0.25rem 0.5rem !important;
+    font-size: .875rem !important;
+    line-height: 1.5 !important;
+    border-radius: 0.2rem !important;
+
+    color: #fff !important;
+    background-color: #f1f2f7 !important;
+    border-color: #f1f2f7 !important;
+    box-shadow: none !important;
+    margin-right: 5px;
+    margin-bottom: 10px !important;
+    color: #333 !important;
+}
+
+.sidebar {
+    height: 2800px;
+}
+
+/* .fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
+    margin-right: 2px;
+    overflow: hidden;
+    padding: 3px 5px;
+    background: #f1f2f7;
+    margin: 3px;
+    font-size: .85em;
+}
+
+.fc .fc-daygrid-event-harness {
+    position: relative;
+    padding: 3px;
+} */
+
+
+
+.select2-selection__choice {
+    color: #000 !important;
+}
+
+.img_thumb {
+    width: 200px !important;
+    height: 150px !important;
+    max-width: 200px !important;
+    max-height: 150px !important;
+    line-height: 20px !important;
+    border: 1px solid #ccc;
+}
+
+.hidden {
+    display: none;
+}
+
+.delivery_status {
+    width: 100px;
+}
+
+body.swal2-toast-shown .swal2-container.swal2-top-end,
+body.swal2-toast-shown .swal2-container.swal2-top-right {
+    top: -5px !important;
+}
+
+.swal2-popup.swal2-toast .swal2-html-container {
+    margin: 0.5em 0em !important;
+}
+
+@media (max-width: 767px) {
+    .dataTables_length {
+        margin-bottom: 20px;
+    }
+
+    .dataTables_filter {
+        margin-bottom: 10px;
+    }
+
+}
+
+textarea[name="footer_invoice_message"] {
+    width: 100%;
+    /* Makes the textarea take the full width of its parent */
+    max-width: 600px;
+    /* Optionally, you can set a max-width if you don't want it to stretch too wide on large screens */
+    box-sizing: border-box;
+    /* This ensures that padding and border are included in the total width and height */
+    margin: 0 auto;
+    /* This centers the textarea in its parent container if it has a max-width */
+    resize: vertical;
+    /* This allows the user to resize the textarea vertically, you could also use 'both' or disable resizing with 'none' */
+}
+
+
+
+/* .main-sidebar,
+.main-sidebar::before {
+    background-color: #333;
+    width: 290px;
+}
+
+body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper,
+body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer,
+body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+    margin-left: 290px;
+}
+
+.sidebar-mini .main-sidebar .nav-link,
+.sidebar-mini-md .main-sidebar .nav-link,
+.sidebar-mini-xs .main-sidebar .nav-link {
+    width: calc(290px - .5rem* 2);
+} */
+
+body {
+    font-size: 17.94px;
+}
+
+h1 {
+    font-size: 17.94px;
+}
+
+.table>:not(:last-child)>:last-child>* {
+    border-bottom-color: currentColor;
+    border-bottom: 1px solid #f1f2f7;
+}
+
+table.table-bordered.dataTable tbody th,
+table.table-bordered.dataTable tbody td {
+    vertical-align: middle;
+}
+
+.group_name {
+    color: #EB9 !important;
+    font-size: 14px !important;
+    font-weight: 200 !important;
+}
+
+.sidebar-dark-primary {
+    color: #fff !important;
+    background-color: #092433 !important;
+}
+
+
+
+.nav-header {
+    opacity: 0.7;
+    margin-top: .5rem !important;
+}
+
+
+
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
+.sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #223A48;
+    color: #efefef;
+}
+
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active,
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus,
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
+    background-color: #223A48;
+    color: #efefef;
+}
+
+.nav-sidebar>.nav-header,
+.sidebar-form {
+    letter-spacing: 1.5;
+}
+
+.btn-danger {
+    background-color: hsl(354, 70%, 90%);
+    color: hsl(354, 70%, 30%);
+    font-weight: bold;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: hsl(210, 10%, 90%);
+    color: hsl(210, 10%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+.btn-primary {
+    background-color: hsl(211, 100%, 90%) !important;
+    color: hsl(211, 70%, 30%) !important;
+    font-weight: 700;
+    border: none;
+}
+
+.btn-warning {
+    background-color: hsl(45, 100%, 90%) !important;
+    color: hsl(45, 100%, 30%) !important;
+    font-weight: 700;
+    border: none;
+}
+
+.btn-info {
+    background-color: hsl(188, 71%, 90%) !important;
+    color: hsl(188, 71%, 30%) !important;
+    font-weight: 700;
+    border: none;
+}
+
+.btn-success {
+    background-color: hsl(134, 50%, 90%);
+    color: hsl(134, 50%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: hsl(134, 50%, 90%);
+    color: hsl(134, 50%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+
+
+
+.badge-danger {
+    background-color: hsl(354, 70%, 90%);
+    color: hsl(354, 70%, 30%);
+    font-weight: bold;
+    border: none;
+    padding: 8px 20px;
+}
+
+.badge-secondary {
+    background-color: hsl(210, 10%, 90%);
+    color: hsl(210, 10%, 30%);
+    font-weight: 700;
+    border: none;
+    padding: 8px 20px;
+}
+
+.badge-primary {
+    background-color: hsl(211, 100%, 90%);
+    color: hsl(211, 200%, 30%);
+    font-weight: 700;
+    border: none;
+    padding: 8px 20px;
+}
+
+.badge-warning {
+    background-color: hsl(45, 100%, 90%);
+    color: hsl(45, 100%, 30%);
+    font-weight: 700;
+    border: none;
+    padding: 8px 20px;
+}
+
+.badge-info {
+    background-color: hsl(188, 71%, 90%);
+    color: hsl(188, 71%, 30%);
+    font-weight: 700;
+    border: none;
+    padding: 8px 20px;
+}
+
+.badge-success {
+    background-color: hsl(134, 50%, 90%);
+    color: hsl(134, 50%, 30%);
+    font-weight: 700;
+    border: none;
+    padding: 8px 20px;
+    font-size: 12px;
+}
+
+.navbar-nav .nav-link .badge {
+    padding: 0px 5px;
+}
+
+
+
+.bg-danger {
+    background-color: hsl(354, 70%, 90%) !important;
+    color: hsl(354, 70%, 30%) !important;
+    font-weight: bold !important;
+    border: none !important;
+}
+
+.bg-secondary {
+    background-color: hsl(210, 10%, 90%) !important;
+    color: hsl(210, 10%, 30%) !important;
+    font-weight: 700 !important;
+    border: none !important;
+}
+
+.bg-primary {
+    background-color: hsl(211, 100%, 90%) !important;
+    color: hsl(211, 200%, 30%) !important;
+    font-weight: 700 !important;
+    border: none !important;
+}
+
+.bg-warning {
+    background-color: hsl(45, 100%, 90%) !important;
+    color: hsl(45, 100%, 30%) !important;
+    font-weight: 700 !important;
+    border: none !important;
+}
+
+.bg-info {
+    background-color: hsl(188, 71%, 90%) !important;
+    color: hsl(188, 71%, 30%) !important;
+    font-weight: 700 !important;
+    border: none !important;
+}
+
+.bg-success {
+    background-color: hsl(134, 50%, 90%) !important;
+    color: hsl(134, 50%, 30%) !important;
+    font-weight: 700 !important;
+    border: none !important;
+}
+
+
+
+
+
+
+.alert-danger {
+    background-color: hsl(354, 70%, 90%);
+    color: hsl(354, 70%, 30%);
+    font-weight: bold;
+    border: none;
+}
+
+.alert-secondary {
+    background-color: hsl(210, 10%, 90%);
+    color: hsl(210, 10%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+.alert-primary {
+    background-color: hsl(211, 100%, 90%);
+    color: hsl(211, 200%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+.alert-warning {
+    background-color: hsl(45, 100%, 90%);
+    color: hsl(45, 100%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+.alert-info {
+    background-color: hsl(188, 71%, 90%);
+    color: hsl(188, 71%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+.alert-success {
+    background-color: hsl(134, 50%, 90%);
+    color: hsl(134, 50%, 30%);
+    font-weight: 700;
+    border: none;
+}
+
+.dashboard-title {
+    color: hsl(245, 76%, 51%);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.dashboard-title-top {
+    color: hsl(246, 84%, 5%);
+    font-weight: 700;
+    font-size: 1.6;
+}
+
+.sub-text {
+    color: hsl(00, 0%, 70%);
+    font-size: 12px;
+}
+
+button i {
+    display: none !important;
+}
+
+.title-spacing {
+    letter-spacing: -1px;
+}
+
+.nav-compact .nav-item .nav-link {
+    padding: 00.25rem 0.25rem !important;
+    letter-spacing: -0.5px;
+}
+
+.custom-rounded {
+    border-radius: 10px !important;
+}
+
+.sidebar .nav-link p {
+    opacity: 0.8;
+    letter-spacing: 0px;
+    font-size: 16px;
+}
+
+.sidebar-search-results .search-title .text-light {
+    color: black !important;
+}
+
+.brand-image {
+    margin-left: 5px !important;
+}
+
+.dark-mode .list-group-item {
+    background-color: #343A40 !important;
+    color: #fff !important;
+}
+
+
+
+
+.btn-outline-secondary {
+    background-color: transparent;
+    color: hsl(210, 10%, 30%);
+    font-weight: 700;
+    border: 1px solid hsl(210, 10%, 30%);
+}
+
+.btn-outline-primary {
+    background-color: transparent !important;
+    color: hsl(211, 70%, 30%) !important;
+    font-weight: 700;
+    border: 1px solid hsl(211, 70%, 30%) !important;
+}
+
+.btn-outline-warning {
+    background-color: transparent !important;
+    color: hsl(45, 100%, 30%) !important;
+    font-weight: 700;
+    border: 1px solid hsl(45, 100%, 30%) !important;
+}
+
+.btn-outline-info {
+    background-color: transparent !important;
+    color: hsl(188, 71%, 30%) !important;
+    font-weight: 700;
+    border: 1px solid hsl(188, 71%, 30%) !important;
+}
+
+.btn-outline-success {
+    background-color: transparent;
+    color: hsl(134, 50%, 30%);
+    font-weight: 700;
+    border: 1px solid hsl(134, 50%, 30%);
+}
+
+.btn-outline-success:hover {
+    background-color: hsl(134, 50%, 90%);
+    color: hsl(134, 50%, 30%);
+    font-weight: 700;
+    border: 1px solid hsl(134, 50%, 30%);
+}

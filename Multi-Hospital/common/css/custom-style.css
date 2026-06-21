@@ -1,0 +1,136 @@
+/**
+ * Fast Technologies UI Redesign Stylesheet
+ * File: common/css/custom-style.css
+ */
+
+:root {
+  --primary-color: #0d6efd;
+  --primary-hover: #0b5ed7;
+  --primary-active: #0a58ca;
+  --primary-rgb: 13, 110, 253;
+  --secondary-color: #6c757d;
+  --secondary-hover: #5c636a;
+  --secondary-active: #565e64;
+  --secondary-rgb: 108, 117, 125;
+}
+
+/* Primary Button Overrides */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.5) !important;
+}
+
+/* Secondary Button Overrides */
+.btn-secondary {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #fff !important;
+  transition: all 0.2s ease-in-out;
+}
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary.active {
+  background-color: var(--secondary-hover) !important;
+  border-color: var(--secondary-hover) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--secondary-rgb), 0.5) !important;
+}
+
+/* Sidebar Navigation Active Element Overrides */
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active,
+.nav-pills .nav-link.active {
+  background-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+/* Sidebar Navigation Hover Overrides */
+.nav-sidebar .nav-item > .nav-link:hover {
+  background-color: rgba(var(--primary-rgb), 0.1) !important;
+  color: var(--primary-color) !important;
+}
+
+/* Base Link State Overrides */
+a {
+  color: var(--primary-color);
+}
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* Form Controls Focus State Overrides */
+.form-control:focus {
+  border-color: rgba(var(--primary-rgb), 0.6) !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.25) !important;
+}
+
+/* Background & Utility Class Overrides */
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+.bg-secondary {
+  background-color: var(--secondary-color) !important;
+}
+.text-primary {
+  color: var(--primary-color) !important;
+}
+.text-secondary {
+  color: var(--secondary-color) !important;
+}
+
+/* Checkbox & Radio Alignment Overrides */
+.icheck-primary > input:first-child:checked + label::before,
+.icheck-primary > input:first-child:checked + input[type="hidden"] + label::before {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/* SweetAlert Overrides */
+.swal2-styled.swal2-confirm {
+  background-color: var(--primary-color) !important;
+  border-left-color: var(--primary-color) !important;
+  border-right-color: var(--primary-color) !important;
+}
+
+/* Card Header Outline Accent Overrides */
+.card-primary.card-outline {
+  border-top: 3px solid var(--primary-color) !important;
+}
+
+/* Pagination Accent Overrides */
+.page-item.active .page-link {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+.page-link {
+  color: var(--primary-color);
+}
+.page-link:hover {
+  color: var(--primary-hover);
+}
+
+/* Branding Wrapper & Navigation Bar Borders */
+.brand-link {
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.2) !important;
+}
+.login-box .card-primary {
+  border-top: 5px solid var(--primary-color) !important;
+}
+
+/* Match Loader animation color to the primary brand color */
+.loader {
+  border-top: 16px solid var(--primary-color) !important;
+}
