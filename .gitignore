@@ -23,3 +23,17 @@ Thumbs.db
 
 # Docker volumes (not tracked)
 db_data/
+
+# Runtime application logs
+Multi-Hospital/application/logs/
+
+# Temporary diagnostic and debugging scripts
+debug500*.sh
+diag.sh
+enable_dev*.sh
+final_smoke.sh
+finalize.sh
+smoketest.sh
+test_home.sh
+verify_all.sh
+
