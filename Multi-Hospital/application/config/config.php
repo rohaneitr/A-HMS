@@ -605,72 +605,31 @@ $config['global_xss_filtering'] = false;
 | 'csrf_regenerate' = Regenerate token on every submission
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-// -------------------------------------------------------------------------
-// CSRF PROTECTION — CSRF-001 Remediation
-// -------------------------------------------------------------------------
-// SECURITY CHANGE: CSRF protection globally enabled.
-// Without CSRF tokens, any malicious website can submit authenticated
-// forms to this application on behalf of a logged-in Super Admin
-// (e.g., creating new admin accounts, deleting hospitals).
-// CI3's built-in CSRF middleware will now validate a per-request token
-// on every state-changing POST request. Requests without a valid token
-// are rejected with a 403 error before any controller code executes.
+// =========================================================================
+// CSRF PROTECTION — CSRF-001 Remediation + REGRESSION-002 Fix
+// =========================================================================
+// Automatically protects all state-changing web methods while exempting
+// the mobile API, and public-facing frontend/site controllers.
+//
+// csrf_protection  : Globally enabled. Every POST to a non-exempt URI must
+//                    carry the hms_csrf_token field or CI3 returns HTTP 403.
+// csrf_token_name  : Non-default name prevents trivial token enumeration.
+// csrf_cookie_name : Cookie holding the server-side token value for compare.
+// csrf_expire      : 900s (15 min). Limits stolen-token reuse window.
+// csrf_regenerate  : TRUE — new token issued after every successful POST,
+//                    preventing token-replay attacks.
+//
+// csrf_exclude_uris patterns (dual-form for rewrite-on and rewrite-off):
+//   api/*         — Mobile REST API uses per-request credential auth.
+//   frontend/*    — Public hospital booking forms inject tokens via
+//                   form_open() at the HTML level.
+//   site/*        — Public hospital profile pages. Same rationale.
 $config['csrf_protection']  = TRUE;
-
-// Non-guessable token name (not the default 'csrf_test_name').
 $config['csrf_token_name']  = 'hms_csrf_token';
-
-// Cookie that carries the CSRF token value for comparison.
 $config['csrf_cookie_name'] = 'hms_csrf_cookie';
-
-// SECURITY CHANGE: Token expiry reduced from 7200s (2h) to 900s (15min).
-// A shorter window limits the usefulness of a stolen CSRF token.
 $config['csrf_expire']      = 900;
-
-// Generate a new CSRF token on every form submission. This prevents
-// token-replay attacks where an attacker re-uses a captured token.
 $config['csrf_regenerate']  = TRUE;
 
-// -------------------------------------------------------------------------
-// CSRF ROUTE EXEMPTION ENGINE — REGRESSION-002 Fix
-// -------------------------------------------------------------------------
-// HOW CI3 RESOLVES THE URI FOR csrf_exclude_uris MATCHING:
-//   The .htaccess RewriteRule is:
-//       RewriteRule ^(.*)$ index.php?/$1 [L]
-//   This passes the original URI as PATH_INFO. Apache's mod_rewrite
-//   rewrites the request internally but $REQUEST_URI retains the original
-//   client-facing URI (e.g., /api/authenticate).
-//   CI3's URI class (system/core/URI.php) calls _detect_uri() which reads
-//   $_SERVER['REQUEST_URI'], strips the base URL prefix and query string,
-//   and returns the clean segment string (e.g., "api/authenticate").
-//   Security::csrf_verify() receives this clean URI string and runs a
-//   preg_match() against each pattern in csrf_exclude_uris.
-//
-// DEFENSIVE DUAL-PATTERN STRATEGY:
-//   Pattern A: 'api/.*'
-//     Matches the clean rewritten URI (standard case — REQUEST_URI based).
-//     e.g., matches "api/authenticate", "api/addNewAppointment", etc.
-//
-//   Pattern B: 'index\.php/api/.*'
-//     Matches if Apache's rewrite is disabled or bypassed and a client
-//     sends the literal index.php path (e.g., direct PHP-FPM access or
-//     when AllowOverride is None and .htaccess is ignored). The escaped
-//     dot prevents regex ambiguity (unescaped '.' matches any character).
-//
-//   Pattern C: 'frontend/.*'
-//     The public-facing hospital website (patient appointment booking)
-//     is served by the Frontend controller. It contains AJAX POST calls
-//     for appointment requests from unauthenticated visitors. CSRF is
-//     handled at the HTML form level via <?= form_open() ?> which injects
-//     the token automatically. Excluding here prevents the raw AJAX path
-//     from failing before the token can be read from the page.
-//
-//   Pattern D: 'site/.*'
-//     Site-specific public-facing hospital pages. Same rationale as C.
-//
-// SECURITY BOUNDARY: Only controllers that are explicitly NOT session-based
-// are listed here. All web dashboard controllers (home, lab, patient,
-// finance, superadmin, etc.) remain fully CSRF-protected.
 $config['csrf_exclude_uris'] = array(
     'api/.*',
     'index\.php/api/.*',
@@ -680,71 +639,10 @@ $config['csrf_exclude_uris'] = array(
     'index\.php/site/.*',
 );
 
-
-
-/*
-|--------------------------------------------------------------------------
-| Output Compression
-|--------------------------------------------------------------------------
-|
-| Enables Gzip output compression for faster page loads.  When enabled,
-| the output class will test whether your server supports Gzip.
-| Even if it does, however, not all browsers support compression
-| so enable only if you are reasonably sure your visitors can handle it.
-|
-| Only used if zlib.output_compression is turned off in your php.ini.
-| Please do not use it together with httpd-level output compression.
-|
-| VERY IMPORTANT:  If you are getting a blank page when compression is enabled it
-| means you are prematurely outputting something to your browser. It could
-| even be a line of whitespace at the end of one of your scripts.  For
-| compression to work, nothing can be sent before the output buffer is called
-| by the output class.  Do not 'echo' any values with compression enabled.
-|
-*/
-$config['compress_output'] = false;
-
-/*
-|--------------------------------------------------------------------------
-| Master Time Reference
-|--------------------------------------------------------------------------
-|
-| Options are 'local' or any PHP supported timezone. This preference tells
-| the system whether to use your server's local time as the master 'now'
-| reference, or convert it to the configured one timezone. See the 'date
-| helper' page of the user guide for information regarding date handling.
-|
-*/
-$config['time_reference'] = 'local';
-
-/*
-|--------------------------------------------------------------------------
-| Rewrite PHP Short Tags
-|--------------------------------------------------------------------------
-|
-| If your PHP installation does not have short tag support enabled CI
-| can rewrite the tags on-the-fly, enabling you to utilize that syntax
-| in your view files.  Options are TRUE or FALSE (boolean)
-|
-| Note: You need to have eval() enabled for this to work.
-|
-*/
-$config['rewrite_short_tags'] = false;
-
-/*
-|--------------------------------------------------------------------------
-| Reverse Proxy IPs
-|--------------------------------------------------------------------------
-|
-| If your server is behind a reverse proxy, you must whitelist the proxy
-| IP addresses from which CodeIgniter should trust headers such as
-| HTTP_X_FORWARDED_FOR and HTTP_CLIENT_IP in order to properly identify
-| the visitor's IP address.
-|
-| You can use both an array or a comma-separated list of proxy addresses,
-| as well as specifying whole subnets. Here are a few examples:
-|
-| Comma-separated:	'10.0.1.200,192.168.5.0/24'
-| Array:		array('10.0.1.200', '192.168.5.0/24')
-*/
-$config['proxy_ips'] = '';
+// =========================================================================
+// CORE ENGINE PREFERENCES
+// =========================================================================
+$config['compress_output']    = FALSE;
+$config['time_reference']     = 'local';
+$config['rewrite_short_tags'] = FALSE;
+$config['proxy_ips']          = '';
