@@ -39,6 +39,8 @@ class Home extends MX_Controller
         $this->load->model('notice/notice_model');
         $this->load->model('home_model');
         $this->load->model('patient/patient_model');
+        $this->load->model('hospital/hospital_model');
+        $this->load->model('settings/settings_model');
     }
 
 
