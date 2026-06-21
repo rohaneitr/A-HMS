@@ -389,9 +389,31 @@ function required()
 
 
 
+    // ------------------------------------------------------------------
+    // LANGUAGE-FIX-4: Cookie-based language override.
+    //
+    // This override must:
+    //   (a) Only fire when a valid language_site cookie is present.
+    //   (b) Validate the cookie value against actually-existing language
+    //       files (APPPATH . 'language/<name>/system_syntax_lang.php').
+    //       An invalid/tampered cookie must NOT reach lang->load() — that
+    //       would trigger a PHP warning/error and potentially crash the page.
+    //   (c) Silently discard any cookie that fails validation so the DB-based
+    //       language (set earlier in this hook) remains in effect.
+    // ------------------------------------------------------------------
     if (!empty($CI->input->cookie('language_site'))) {
-        $CI->language = $CI->input->cookie('language_site');
-        $CI->lang->load('system_syntax', $CI->language);
+        $cookieLang = $CI->input->cookie('language_site');
+        // Sanitise: only allow lowercase letters, digits, and underscores/hyphens
+        // (all valid CI language folder names follow this pattern).
+        if (preg_match('/^[a-z][a-z0-9_-]{0,49}$/i', $cookieLang)) {
+            $langFile = APPPATH . 'language/' . $cookieLang . '/system_syntax_lang.php';
+            if (file_exists($langFile)) {
+                $CI->language = $cookieLang;
+                $CI->lang->load('system_syntax', $cookieLang);
+            }
+            // else: file missing — silently keep the DB-based language already loaded above.
+        }
+        // else: cookie value looks tampered/invalid — ignore it entirely.
     }
 
 

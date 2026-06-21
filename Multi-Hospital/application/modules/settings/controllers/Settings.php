@@ -337,6 +337,21 @@ class Settings extends MX_Controller
 
             $this->settings_model->updateSettings($id, $data);
 
+            // ------------------------------------------------------------------
+            // LANGUAGE-FIX-3: Sync the session and cookie to match the new DB
+            // value. Without this, the global cookie-override in required.php
+            // (end of hook) would re-apply the OLD cookie language on the very
+            // next request and silently undo the DB change.
+            // ------------------------------------------------------------------
+            $this->session->set_userdata('language_site', $language);
+            $cookie = array(
+                'name'   => 'language_site',
+                'value'  => $language,
+                'expire' => '2595000',
+                'secure' => FALSE,
+            );
+            $this->input->set_cookie($cookie);
+
             // Loading View
             show_swal(lang('updated'), 'success', lang('updated'));
             if (!empty($language_settings)) {
@@ -349,12 +364,36 @@ class Settings extends MX_Controller
 
     function changeLanguageFlag()
     {
-        $selectedLanguage = $this->input->get('lang'); // Replace this with the selected language
+        $selectedLanguage = $this->input->get('lang');
+
+        // ------------------------------------------------------------------
+        // LANGUAGE-FIX-1: Validate the requested language against the DB
+        // language table before accepting it. This prevents a bad cookie
+        // value from crashing the lang loader on subsequent requests.
+        // ------------------------------------------------------------------
+        $validLanguage = $this->db->get_where('language', array('language' => $selectedLanguage))->row();
+        if (empty($validLanguage)) {
+            // Unknown language — silently fall back to english
+            $selectedLanguage = 'english';
+        }
+
+        // ------------------------------------------------------------------
+        // LANGUAGE-FIX-2: Persist to the DB so the choice survives across
+        // sessions, devices, and cookie expiry. We use hospital_id from the
+        // session (set in required.php) which is always correct for both
+        // admin and superadmin.
+        // ------------------------------------------------------------------
+        $hospital_id = $this->session->userdata('hospital_id');
+        if (!empty($hospital_id)) {
+            $this->settings_model->updateHospitalSettings($hospital_id, array('language' => $selectedLanguage));
+        }
+
+        // Sync session and cookie so the change is immediate this request.
         $this->session->set_userdata('language_site', $selectedLanguage);
         $cookie = array(
             'name'   => 'language_site',
             'value'  => $selectedLanguage,
-            'expire' => '2595000', // Set to one day (in seconds)
+            'expire' => '2595000',
             'secure' => FALSE,
         );
         $this->input->set_cookie($cookie);

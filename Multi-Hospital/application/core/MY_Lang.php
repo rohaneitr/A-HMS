@@ -43,8 +43,9 @@ class MY_Lang extends CI_Lang {
                 }
             }
             
-            // If the translation file does not exist in Bangla, skip loading to avoid CI crash
-            // It will gracefully fall back to the preloaded English translations
+            // If the translation file does not exist for this language,
+            // skip lang->load() to prevent a CI crash/warning.
+            // The English base strings (loaded above) act as the fallback.
             if (!$found) {
                 if ($return === TRUE) {
                     return $this->language;
