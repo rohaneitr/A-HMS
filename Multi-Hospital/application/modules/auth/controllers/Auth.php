@@ -207,6 +207,26 @@ class Auth extends MX_Controller {
                 'type' => 'password',
             );
 
+            // Resolve the current language and its flag icon for the login view.
+            // The login.php view uses $flagIcon (line 378) for the language-selector
+            // flag and $this->language for active-class logic (lines 379, 382, etc.).
+            // We read from the superadmin settings row; fallback to 'english' / 'us'.
+            $settings_lang = $this->db
+                ->where('hospital_id', 'superadmin')
+                ->get('settings')->row();
+            $lang_code  = !empty($settings_lang->language) ? $settings_lang->language : 'english';
+            $flag_map   = array(
+                'arabic'     => 'sa',
+                'english'    => 'us',
+                'spanish'    => 'es',
+                'french'     => 'fr',
+                'italian'    => 'it',
+                'portuguese' => 'pt',
+                'turkish'    => 'tr',
+            );
+            $data['flagIcon'] = isset($flag_map[$lang_code]) ? $flag_map[$lang_code] : 'us';
+            $this->language   = $lang_code;
+
             $this->_render_page('auth/login', $data);
         }
     }

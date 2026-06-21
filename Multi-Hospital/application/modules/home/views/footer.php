@@ -231,7 +231,9 @@ COOKIE READING UTILITY:
         hash: '<?php echo $this->security->get_csrf_hash(); ?>',
 
         // Cookie name as configured in config.php: csrf_cookie_name = 'hms_csrf_cookie'
-        cookieName: '<?php echo $this->security->get_csrf_cookie_name(); ?>',
+        // CI3's Security class has no get_csrf_cookie_name() getter (that is CI4).
+        // The config value is statically known, so we use it directly.
+        cookieName: '<?php echo $this->config->item('csrf_cookie_name'); ?>',
 
         /**
          * Reads the current CSRF token value from the browser cookie.

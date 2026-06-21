@@ -136,6 +136,12 @@ function required()
     } elseif ($CI->router->fetch_class() == 'site' && ($CI->router->fetch_method() == 'getAvailableSlotByDoctorByDateByJason' || $CI->router->fetch_method() == 'getDoctorVisit' || $CI->router->fetch_method() == 'getDoctorVisitCharges' || $CI->router->fetch_method() == 'addNew')) {
         $CI->hospital_id = $CI->session->userdata('site_id');
     } else {
+        // Initialize hospital_id to null. It will be assigned below based on
+        // the user's group. Without this, reading $CI->hospital_id on line 211
+        // when the class is 'auth' (which skips the assignment block) generates
+        // an 'Undefined property' warning that sends output before headers.
+        $CI->hospital_id = null;
+
         if ($CI->ion_auth->logged_in()) {
             $user = $CI->ion_auth->get_user_id();
             $users_details = $CI->db->get_where('users', array('id' => $user))->row();
