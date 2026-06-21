@@ -475,6 +475,10 @@
         <?php } ?>
 
         <form method="post" action="auth/login">
+            <?php /* CSRF-001: CI3 Security::csrf_verify() checks this token on every POST.
+                    Without it every login attempt returns HTTP 403 before Auth::login() runs. */
+            ?>
+            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             <div class="input-group">
               <input type="email" name="identity" class="form-control" placeholder="<?php echo lang('email') ?>" required>
             <div class="input-group-append">
@@ -520,7 +524,7 @@
         Demo Credentials
       </h3>
       <div class="demo-buttons">
-        <button type="button" class="demo-btn" onclick="fillCredentials('superadmin@hms.com', '12345')">
+        <button type="button" class="demo-btn" onclick="fillCredentials('superadmin@hms.com', 'Admin@HMS2024!')">
           <i class="fas fa-user-shield"></i>
           Super Admin
         </button>
@@ -587,6 +591,9 @@
         <?php } ?>
 
         <form method="post" action="auth/login">
+            <?php /* CSRF-001: Production login form token injection. */
+            ?>
+            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             <div class="input-group">
               <input type="email" name="identity" class="form-control" placeholder="<?php echo lang('email') ?>" required>
             <div class="input-group-append">
@@ -635,6 +642,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <form method="post" action="auth/forgot_password">
+          <?php /* CSRF-001: Forgot-password modal form token injection. */
+          ?>
+          <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
           <div class="modal-header">
             <h4 class="modal-title"><?php echo lang('forgot_your_password') ?>?</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
