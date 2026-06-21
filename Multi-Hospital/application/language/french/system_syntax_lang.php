@@ -1885,3 +1885,4 @@ $lang['basic_information'] = 'Informations de base';
 $lang['prescription_details'] = 'Détails de la prescription';
 $lang['emergency_contact'] = 'Contact d\'urgence';
 $lang['basic'] = 'De base';
+$lang['more_infoo'] = 'More Info';

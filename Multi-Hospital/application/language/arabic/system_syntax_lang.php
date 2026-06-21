@@ -2573,3 +2573,4 @@ $lang['medicine_information'] = 'معلومات الأدوية';
 $lang['basic_information'] = 'المعلومات الأساسية';
 $lang['prescription_details'] = 'تفاصيل الوصفة الطبية';
 $lang['basic'] = 'الأساسية';
+$lang['more_infoo'] = 'More Info';

@@ -267,3 +267,4 @@ $lang['item_name'] = 'Item Name';
 $lang['invoice_id'] = 'Invoice Id';
 $lang['new_sale'] = 'New Sale';
 
+$lang['more_infoo'] = 'More Info';

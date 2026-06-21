@@ -1862,3 +1862,4 @@ $lang['basic_information'] = 'Temel Bilgiler';
 $lang['prescription_details'] = 'Reçete Detayları';
 $lang['emergency_contact'] = 'Acil Durum İletişimi';
 $lang['basic'] = 'Temel';
+$lang['more_infoo'] = 'More Info';

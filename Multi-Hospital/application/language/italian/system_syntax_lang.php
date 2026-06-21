@@ -2028,3 +2028,4 @@ $lang['basic_information'] = 'Informazioni di base';
 $lang['prescription_details'] = 'Dettagli della prescrizione';
 $lang['emergency_contact'] = 'Contatto di emergenza';
 $lang['basic'] = 'Base';
+$lang['more_infoo'] = 'More Info';

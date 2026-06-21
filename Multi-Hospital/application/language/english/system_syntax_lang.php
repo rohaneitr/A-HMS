@@ -1958,3 +1958,4 @@ $lang['active_hospitals'] = 'Active Hospitals';
 $lang['show_tawkto_in_website'] = 'Show Tawk.to chat in Website';
 $lang['tawk_to_status'] = 'Tawk To Status';
 
+$lang['more_infoo'] = 'More Info';

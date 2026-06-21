@@ -2020,3 +2020,4 @@ $lang['basic_information'] = 'Informações Básicas';
 $lang['prescription_details'] = 'Detalhes da Prescrição';
 $lang['emergency_contact'] = 'Contato de Emergência';
 $lang['basic'] = 'Básico';
+$lang['more_infoo'] = 'More Info';
