@@ -333,6 +333,52 @@ COOKIE READING UTILITY:
     });
 
     // -------------------------------------------------------------------------
+    // MECHANISM C: HTML Form Submit CSRF Interceptor
+    // -------------------------------------------------------------------------
+    // Automatically injects/updates the CSRF token input field in all standard
+    // POST forms in the DOM on document ready and immediately prior to submit.
+    // Also overrides HTMLFormElement.prototype.submit to secure programmatically
+    // triggered submissions.
+    // -------------------------------------------------------------------------
+    $(document).ready(function() {
+        // Inject token field to all POST forms on the page
+        $('form[method="post"], form[method="POST"]').each(function() {
+            var form = $(this);
+            if (form.find('input[name="' + hmsCSRF.name + '"]').length === 0) {
+                form.append('<input type="hidden" name="' + hmsCSRF.name + '" value="' + hmsCSRF.hash + '">');
+            }
+        });
+    });
+
+    // Delegate submit event to dynamic form instances (e.g. within modals)
+    $(document).on('submit', 'form[method="post"], form[method="POST"]', function() {
+        var form = $(this);
+        var tokenInput = form.find('input[name="' + hmsCSRF.name + '"]');
+        if (tokenInput.length === 0) {
+            form.append('<input type="hidden" name="' + hmsCSRF.name + '" value="' + hmsCSRF.hash + '">');
+        } else {
+            tokenInput.val(hmsCSRF.hash);
+        }
+    });
+
+    // Intercept programmatic submits (calls to form.submit())
+    (function() {
+        var originalSubmit = HTMLFormElement.prototype.submit;
+        HTMLFormElement.prototype.submit = function() {
+            var form = $(this);
+            if (form.attr('method') && form.attr('method').toUpperCase() === 'POST') {
+                var tokenInput = form.find('input[name="' + hmsCSRF.name + '"]');
+                if (tokenInput.length === 0) {
+                    form.append('<input type="hidden" name="' + hmsCSRF.name + '" value="' + hmsCSRF.hash + '">');
+                } else {
+                    tokenInput.val(hmsCSRF.hash);
+                }
+            }
+            originalSubmit.apply(this, arguments);
+        };
+    })();
+
+    // -------------------------------------------------------------------------
     // MECHANISM B: Axios Global Request Interceptor (CSRF Token Injection)
     // -------------------------------------------------------------------------
     // Applies to: ALL axios.post(), axios.put(), axios.patch(), axios.delete()
