@@ -20,7 +20,7 @@ services:
     container_name: hms-web
     restart: always
     ports:
-      - "8080:80"
+      - "8082:80"
     volumes:
       # Mount the extracted PHP code to Apache root
       - ./Multi-Hospital:/var/www/html
