@@ -21,9 +21,9 @@ services:
     restart: always
     ports:
       - "8082:80"
-    volumes:
-      # Mount the extracted PHP code to Apache root
-      - ./Multi-Hospital:/var/www/html
+    # প্রোডাকশনে নিচে দেওয়া এই ভলিউম মাউন্টটি বন্ধ রাখা হয়েছে পারমিশন এরর (403) দূর করার জন্য
+    # volumes:
+    #   - ./Multi-Hospital:/var/www/html
     depends_on:
       - db
 
