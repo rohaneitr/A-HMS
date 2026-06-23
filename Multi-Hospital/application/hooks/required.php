@@ -6,11 +6,17 @@ function required()
 
     // =========================================================================
     // AUTO-MIGRATION: Ensure ci_sessions table exists (SESS-001 requirement)
-    // This runs before the session library loads. Uses IF NOT EXISTS so it is
-    // a no-op on every request after the first. Safe to run on each bootstrap.
+    // Uses a raw mysqli connection — $CI->db->query() is unreliable here
+    // because db_debug=TRUE causes exit() instead of throwing catchable exceptions.
     // =========================================================================
-    try {
-        $CI->db->query("
+    $db_host = getenv('DB_HOST') ?: 'db';
+    $db_user = getenv('DB_USER') ?: 'root';
+    $db_pass = getenv('DB_PASS') ?: 'rootpassword';
+    $db_name = getenv('DB_NAME') ?: 'hmssaas';
+
+    $mysqli = @new mysqli($db_host, $db_user, $db_pass, $db_name);
+    if (!$mysqli->connect_error) {
+        $mysqli->query("
             CREATE TABLE IF NOT EXISTS `ci_sessions` (
                 `id`         varchar(128)     NOT NULL,
                 `ip_address` varchar(45)      NOT NULL,
@@ -20,9 +26,7 @@ function required()
                 KEY `ci_sessions_timestamp` (`timestamp`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
         ");
-    } catch (Exception $e) {
-        // Non-fatal: log and continue; session will fail gracefully if table missing
-        log_message('error', 'ci_sessions auto-migration failed: ' . $e->getMessage());
+        $mysqli->close();
     }
     // =========================================================================
 
