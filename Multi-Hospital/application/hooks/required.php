@@ -5,6 +5,28 @@ function required()
     $CI = &get_instance();
 
     // =========================================================================
+    // AUTO-MIGRATION: Ensure ci_sessions table exists (SESS-001 requirement)
+    // This runs before the session library loads. Uses IF NOT EXISTS so it is
+    // a no-op on every request after the first. Safe to run on each bootstrap.
+    // =========================================================================
+    try {
+        $CI->db->query("
+            CREATE TABLE IF NOT EXISTS `ci_sessions` (
+                `id`         varchar(128)     NOT NULL,
+                `ip_address` varchar(45)      NOT NULL,
+                `timestamp`  int(10) unsigned DEFAULT 0 NOT NULL,
+                `data`       blob             NOT NULL,
+                PRIMARY KEY (`id`),
+                KEY `ci_sessions_timestamp` (`timestamp`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+        ");
+    } catch (Exception $e) {
+        // Non-fatal: log and continue; session will fail gracefully if table missing
+        log_message('error', 'ci_sessions auto-migration failed: ' . $e->getMessage());
+    }
+    // =========================================================================
+
+    // =========================================================================
     // REGRESSION-003 FIX: Per-Subsystem sess_match_ip Runtime Override
     // =========================================================================
     //
