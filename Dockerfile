@@ -37,7 +37,9 @@ RUN chown -R www-data:www-data /var/www/html \
 
 # Copy and configure entrypoint (creates ci_sessions table, then starts Apache)
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Strip Windows CRLF line endings (critical — bash fails with \r in shebangs)
+RUN sed -i 's/\r//' /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Set CodeIgniter environment to production
 ENV CI_ENV=production

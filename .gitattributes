@@ -1,0 +1,22 @@
+# Force LF line endings for shell scripts (critical for Linux containers)
+*.sh text eol=lf
+docker-entrypoint.sh text eol=lf
+
+# Text files
+*.php text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.sql text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
