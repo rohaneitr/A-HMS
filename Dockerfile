@@ -34,9 +34,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/application/cache \
     && chmod -R 775 /var/www/html/uploads
 
-# Copy PHP-based DB init script (auto-creates ci_sessions table via PHP)
-COPY ci_sessions_init.php /var/www/html/ci_sessions_init.php
-RUN chown www-data:www-data /var/www/html/ci_sessions_init.php
+# ci_sessions table is auto-created by the PHP hook in application/hooks/required.php
 
 # Set CodeIgniter environment to production
 ENV CI_ENV=production
