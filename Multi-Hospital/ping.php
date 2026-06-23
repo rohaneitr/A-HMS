@@ -19,9 +19,28 @@ try {
         echo "DB ERROR: " . $conn->connect_error . "\n";
     } else {
         echo "DB OK: Connected to $name\n";
-        // Check ci_sessions table
+        // Check and create ci_sessions table if missing
         $res = $conn->query("SHOW TABLES LIKE 'ci_sessions'");
-        echo "ci_sessions table: " . ($res->num_rows > 0 ? "EXISTS" : "MISSING") . "\n";
+        if ($res->num_rows > 0) {
+            echo "ci_sessions table: EXISTS\n";
+        } else {
+            echo "ci_sessions table: MISSING. Creating...\n";
+            $createTableQuery = "
+                CREATE TABLE IF NOT EXISTS `ci_sessions` (
+                    `id`         varchar(128)     NOT NULL,
+                    `ip_address` varchar(45)      NOT NULL,
+                    `timestamp`  int(10) unsigned DEFAULT 0 NOT NULL,
+                    `data`       blob             NOT NULL,
+                    PRIMARY KEY (`id`),
+                    KEY `ci_sessions_timestamp` (`timestamp`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            ";
+            if ($conn->query($createTableQuery)) {
+                echo "ci_sessions table: CREATED SUCCESSFULLY\n";
+            } else {
+                echo "ci_sessions table: CREATION FAILED: " . $conn->error . "\n";
+            }
+        }
         $conn->close();
     }
 } catch (Exception $e) {
