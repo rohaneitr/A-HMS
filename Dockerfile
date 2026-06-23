@@ -1,6 +1,6 @@
 FROM php:8.1-apache
 
-# Install system dependencies
+# Install system dependencies + mysql-client (needed by entrypoint to init DB)
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
+    default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure and install PHP extensions
@@ -34,7 +35,13 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/application/cache \
     && chmod -R 775 /var/www/html/uploads
 
+# Copy and configure entrypoint (creates ci_sessions table, then starts Apache)
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Set CodeIgniter environment to production
 ENV CI_ENV=production
 
 EXPOSE 80
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
