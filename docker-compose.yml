@@ -12,8 +12,9 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      # Mount sql dump to initialize the database
-      - ./Database/database_tables.sql:/docker-entrypoint-initdb.d/init.sql
+      # Mount sql dumps to initialize the database (alphabetical order)
+      - ./Database/database_tables.sql:/docker-entrypoint-initdb.d/00_database_tables.sql
+      - ./Database/01_ci_sessions.sql:/docker-entrypoint-initdb.d/01_ci_sessions.sql
 
   web:
     build: .
@@ -21,9 +22,12 @@ services:
     restart: always
     ports:
       - "8080:80"
-    volumes:
-      # Mount the extracted PHP code to Apache root
-      - ./Multi-Hospital:/var/www/html
+    environment:
+      CI_ENV: production
+      DB_HOST: db
+      DB_NAME: hmssaas
+      DB_USER: root
+      DB_PASS: rootpassword
     depends_on:
       - db
 

@@ -9,7 +9,9 @@ Multi-Hospital/vendor/
 *.zip
 
 # Environment & sensitive scratch files
-*.sql
+reset_superadmin_password.sql
+ci_sessions_schema.sql
+ci_sessions_setup.sql
 verify_hash.php
 scratch_*.py
 regression_smoke_test.php

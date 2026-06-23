@@ -75,10 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'db',
-	'username' => 'root',
-	'password' => 'rootpassword',
-	'database' => 'hmssaas',
+	// Read from environment variable — falls back to docker-compose default
+	'hostname' => getenv('DB_HOST')     ?: 'db',
+	'username' => getenv('DB_USER')     ?: 'root',
+	'password' => getenv('DB_PASS')     ?: 'rootpassword',
+	'database' => getenv('DB_NAME')     ?: 'hmssaas',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
