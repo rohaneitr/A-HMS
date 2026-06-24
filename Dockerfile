@@ -33,9 +33,15 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/application/cache \
     && chmod -R 775 /var/www/html/uploads
 
-# ci_sessions table is auto-created by the PHP hook in application/hooks/required.php
+# ci_sessions table is auto-created by docker-entrypoint.sh on container start
+
+# Copy entrypoint script that creates ci_sessions table before Apache starts
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Set CodeIgniter environment to production
 ENV CI_ENV=production
 
 EXPOSE 80
+
+ENTRYPOINT ["docker-entrypoint.sh"]
