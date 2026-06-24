@@ -67,15 +67,26 @@ $statements['create_ssl_state'] = "CREATE TABLE IF NOT EXISTS `sslcommerz_paymen
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 
-// 4. Insert SSLCOMMERZ for each hospital (using users table as hospital reference)
+// 4. Insert SSLCOMMERZ for each hospital (using users_groups Ion Auth table)
 $statements['ssl_all_hospitals'] = "INSERT INTO `paymentGateway` (`name`, `status`, `APIUsername`, `APIPassword`, `hospital_id`)
-SELECT 'SSLCOMMERZ', 'test', 'Your Store ID', 'Your Store Password', u.id
-FROM `users` u
-INNER JOIN `groups_users` gu ON gu.user_id = u.id
-INNER JOIN `groups` g ON g.id = gu.group_id AND g.name = 'admin'
+SELECT DISTINCT 'SSLCOMMERZ', 'test', 'Your Store ID', 'Your Store Password', ug.user_id
+FROM `users_groups` ug
+INNER JOIN `groups` g ON g.id = ug.group_id AND g.name = 'admin'
 WHERE NOT EXISTS (
     SELECT 1 FROM `paymentGateway` pg
-    WHERE pg.`name` = 'SSLCOMMERZ' AND pg.`hospital_id` = u.id
+    WHERE pg.`name` = 'SSLCOMMERZ' AND pg.`hospital_id` = ug.user_id
+)";
+
+// 4b. Fallback: also insert for any hospital_id that already has PayPal/Stripe etc but no SSLCOMMERZ
+$statements['ssl_fallback'] = "INSERT INTO `paymentGateway` (`name`, `status`, `APIUsername`, `APIPassword`, `hospital_id`)
+SELECT DISTINCT 'SSLCOMMERZ', 'test', 'Your Store ID', 'Your Store Password', existing.hospital_id
+FROM (
+    SELECT DISTINCT hospital_id FROM `paymentGateway`
+    WHERE hospital_id != 'superadmin'
+) existing
+WHERE NOT EXISTS (
+    SELECT 1 FROM `paymentGateway` pg
+    WHERE pg.`name` = 'SSLCOMMERZ' AND pg.`hospital_id` = existing.hospital_id
 )";
 
 // 5. Insert for superadmin
