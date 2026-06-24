@@ -103,3 +103,24 @@ The workspace contains several pre-configured utilities to assist with testing a
 2. **Override Styles Safely:** Upgrade the UI/UX by appending styles to a dedicated custom style file. Avoid editing core libraries' CSS files (e.g. `adminlte.css`, `bootstrap.css`).
 3. **No Core Frame Modifications:** Never modify files in `vendor/` or third-party core CodeIgniter files. Put overrides inside modular extension controllers (`MX_Controller`).
 4. **PHP 8.3 Guidelines:** Maintain strict typing, avoid deprecated functions, and ensure type-safety to prevent fatal engine crashes in high-tier execution environments.
+
+---
+
+## 6. 🎨 Branding & Customization Blueprint
+
+### Custom Identity Profile (Fast Technologies)
+- **App Name:** A+HMS (displayed on page titles, login view, and dashboard navigation headers).
+- **Vendor / Company:** Fast Technologies (used as system vendor and copyright footprint).
+- **Contact Info:** Email: `fctbd1@gmail.com` | Phone: `+8801759190782`.
+- **Logo Assets:**
+  - Primary App Logo: `Multi-Hospital/uploads/logo.png`.
+  - Browser Favicon: `Multi-Hospital/uploads/favicon.png`.
+
+### Language Customization (Bengali Support)
+- **Translation Directory:** `Multi-Hospital/application/language/bangla/` contains modified language translation scripts (e.g. `system_syntax_lang.php`).
+- **Database Activation:**
+  Activated in the `language` table with entry:
+  `INSERT INTO language (id, language, folder_name, flag_icon, description, status) VALUES (17, 'bangla', 'bangla', 'bd', 'বাংলা (Bangla)', '1');`
+- **User Selector:**
+  - Added to the dropdown flag selector in [login.php](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/views/auth/login.php) mapping to code `bd`.
+  - Handled in the dashboard header flag dropdown in [dashboard.php](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/modules/home/views/dashboard.php). Fixed a bug where display labels in the Patient/Doctor dropdown were hardcoded to 'عربى' (Arabic) by changing them to load `ucfirst($language->language)` dynamically.
