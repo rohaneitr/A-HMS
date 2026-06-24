@@ -1,8 +1,9 @@
 # Exclude large zip files
 *.zip
 
-# Exclude local databases and backups
-Database/
+# Exclude local databases and backups, but keep database_tables.sql
+Database/*
+!Database/database_tables.sql
 db_data/
 
 # Exclude git repository
