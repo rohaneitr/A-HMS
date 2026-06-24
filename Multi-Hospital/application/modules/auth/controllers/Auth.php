@@ -218,6 +218,7 @@ class Auth extends MX_Controller {
             $flag_map   = array(
                 'arabic'     => 'sa',
                 'english'    => 'us',
+                'bangla'     => 'bd',
                 'spanish'    => 'es',
                 'french'     => 'fr',
                 'italian'    => 'it',

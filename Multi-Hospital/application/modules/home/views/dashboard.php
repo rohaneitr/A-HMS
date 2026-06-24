@@ -500,7 +500,7 @@
                 <a href="profile/changeLanguageFlag?lang=<?php echo $language->language; ?>" class="dropdown-item <?php if ($this->language == $language->language) {
                                                                                                                     echo 'active';
                                                                                                                   } ?>">
-                  <i class="flag-icon flag-icon-<?php echo $language->flag_icon; ?> mr-2"></i> عربى
+                  <i class="flag-icon flag-icon-<?php echo $language->flag_icon; ?> mr-2"></i> <?php echo ucfirst($language->language); ?>
                 </a>
 
 

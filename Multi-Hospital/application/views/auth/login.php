@@ -385,6 +385,9 @@
         <a href="frontend/changeLanguageFlag?lang=english" class="dropdown-item <?php echo ($this->language == 'english') ? 'active' : ''; ?>">
           <i class="flag-icon flag-icon-us mr-2"></i> English
         </a>
+        <a href="frontend/changeLanguageFlag?lang=bangla" class="dropdown-item <?php echo ($this->language == 'bangla') ? 'active' : ''; ?>">
+          <i class="flag-icon flag-icon-bd mr-2"></i> বাংলা (Bangla)
+        </a>
         <a href="frontend/changeLanguageFlag?lang=spanish" class="dropdown-item <?php echo ($this->language == 'spanish') ? 'active' : ''; ?>">
           <i class="flag-icon flag-icon-es mr-2"></i> Español
         </a>
