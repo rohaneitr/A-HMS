@@ -36,6 +36,9 @@ RUN chown -R www-data:www-data /var/www/html \
 
 # ci_sessions table is auto-created by docker-entrypoint.sh on container start
 
+# Cache-bust: force re-copy of entrypoint and SQL on every build
+ARG CACHE_BUST=20260624_2
+
 # Copy database SQL dump for first-run import
 COPY Database/database_tables.sql /docker-entrypoint-initdb.d/database_tables.sql
 
