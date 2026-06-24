@@ -1,0 +1,42 @@
+# Exclude large zip files
+*.zip
+
+# Exclude local databases and backups
+Database/
+db_data/
+
+# Exclude git repository
+.git/
+.gitignore
+.gitattributes
+
+# Exclude IDE/Agent directories and logs
+.gemini/
+PROJECT_MEMORY.md
+app_settings.json
+cookies.txt
+create_sessions.json
+exec_cmd.json
+post_deploy.json
+prune_cmd.json
+ssh_test.py
+*.log
+
+# Exclude Documentation and other non-app folders
+Documentation/
+HTAccess/
+verify_all.sh
+smoketest.sh
+test_home.sh
+final_smoke.sh
+finalize.sh
+debug500*.sh
+diag.sh
+enable_dev*.sh
+reset_superadmin.php
+check_creds.php
+check_superadmin.php
+ci_sessions_*.sql
+regression_smoke_test.php
+run_local.sh
+scratch/
