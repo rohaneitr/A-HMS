@@ -16,7 +16,7 @@ printf '[client]\npassword=%s\n' "${DB_PASS:-rootpassword}" > "$MYSQL_PWD_FILE"
 chmod 600 "$MYSQL_PWD_FILE"
 
 run_mysql() {
-    mysql --defaults-extra-file="${MYSQL_PWD_FILE}" -h"${DB_HOST}" -u"${DB_USER}" "${DB_NAME}" "$@"
+    mysql --defaults-extra-file="${MYSQL_PWD_FILE}" -h"${DB_HOST}" -u"${DB_USER}" "${DB_NAME}" --skip-ssl "$@"
 }
 
 echo "[entrypoint] Waiting for database at ${DB_HOST}..."
