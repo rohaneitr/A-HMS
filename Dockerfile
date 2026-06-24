@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
+    git \
     mariadb-client \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,8 +25,14 @@ RUN sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
 # Set working directory
 WORKDIR /var/www/html
 
+# Copy Composer binary from official image
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Copy application source from Multi-Hospital/ subdirectory
 COPY Multi-Hospital/ /var/www/html/
+
+# Install composer dependencies
+RUN composer install --no-dev --optimize-autoloader
 
 # Fix file permissions only for writable directories (logs, cache, uploads)
 RUN chown -R www-data:www-data /var/www/html/application/logs \
