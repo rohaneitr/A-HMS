@@ -19,6 +19,7 @@ This document serves as the central reference (Project Memory) for the HMS SaaS 
 - **Rendering:** Server-Side Rendered (SSR) HTML views via PHP controllers.
 - **UI Frameworks:** AdminLTE 3 Dashboard, Bootstrap 4 CSS framework, jQuery, and DataTables jQuery Plugin.
 - **Charts & Analytics:** Chart.js, Morris.js, Flot Charts, Sparkline.
+- **Custom Theme:** `common/css/custom-style.css` — loaded last in `dashboard.php`. Safe CSS-only overrides. No PHP/JS touched.
 
 ---
 
@@ -36,9 +37,15 @@ This document serves as the central reference (Project Memory) for the HMS SaaS 
     - **[auth/](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/modules/auth/)** — Authentication controller and login/logout views.
     - **[home/](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/modules/home/)** — Home / Dashboard controller and global layout views (header, footer, sidebar).
     - **[superadmin/](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/modules/superadmin/)** — Super Administrator actions.
+    - **[pgateway/](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/modules/pgateway/)** — Payment Gateway management (list, settings form).
+    - **[sslcommerz/](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/modules/sslcommerz/)** — SSLCOMMERZ payment processing (initiate, success, fail, cancel, IPN).
+  - **[common/css/custom-style.css](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/common/css/custom-style.css)** — ⭐ MASTER UI OVERRIDE FILE. Purple + Dark Slate theme with Inter font.
+  - **[adminlte/dist/css/changes.css](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/adminlte/dist/css/changes.css)** — AdminLTE-specific tweaks (do not modify for theme changes).
 - **[Database/](file:///c:/Users/Rohan/Desktop/hmssaas/Database/)** — Initial database scripts.
 - **[Dockerfile](file:///c:/Users/Rohan/Desktop/hmssaas/Dockerfile)** — Builds the custom `php:8.1-apache` container.
 - **[docker-compose.yml](file:///c:/Users/Rohan/Desktop/hmssaas/docker-compose.yml)** — Local environment orchestration file.
+- **[application/migrations/update_branding_2026.sql](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/migrations/update_branding_2026.sql)** — DB migration for branding + SSLCOMMERZ seeding.
+- **[run-migration.php](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/run-migration.php)** — One-time migration runner. **DELETE after use!**
 
 ---
 
@@ -100,9 +107,10 @@ The workspace contains several pre-configured utilities to assist with testing a
 ## 🔒 Strict Guardrails & Development Rules
 
 1. **Do Not Touch Core IDs/Classes:** The application is heavily driven by legacy jQuery selectors. Under no circumstances should you edit or rename existing HTML `id` attributes or core JavaScript class hooks.
-2. **Override Styles Safely:** Upgrade the UI/UX by appending styles to a dedicated custom style file. Avoid editing core libraries' CSS files (e.g. `adminlte.css`, `bootstrap.css`).
+2. **Override Styles Safely:** All UI customization MUST go into `common/css/custom-style.css` only. Never edit `adminlte.min.css`, `bootstrap.min.css`, or any plugin CSS.
 3. **No Core Frame Modifications:** Never modify files in `vendor/` or third-party core CodeIgniter files. Put overrides inside modular extension controllers (`MX_Controller`).
 4. **PHP 8.3 Guidelines:** Maintain strict typing, avoid deprecated functions, and ensure type-safety to prevent fatal engine crashes in high-tier execution environments.
+5. **Payment Gateway Column Mapping:** The `paymentGateway` table uses `APIUsername` = Store ID / Username, `APIPassword` = Store Password / API Key. SSLCOMMERZ uses these same columns.
 
 ---
 
@@ -116,6 +124,14 @@ The workspace contains several pre-configured utilities to assist with testing a
   - Primary App Logo: `Multi-Hospital/uploads/logo.png`.
   - Browser Favicon: `Multi-Hospital/uploads/favicon.png`.
 
+### UI Theme
+- **Theme Name:** Purple + Dark Slate (Premium Luxury)
+- **Primary Color:** `#7c3aed` (Vibrant Purple)
+- **Sidebar BG:** `#1e1b4b` (Deep Indigo) → `#13103a` gradient
+- **Font:** Inter (Google Fonts, CSS import)
+- **Override File:** `common/css/custom-style.css` — loaded last via `dashboard.php` line 111
+- **Safe for changes:** Only edit this file for color/design updates
+
 ### Language Customization (Bengali Support)
 - **Translation Directory:** `Multi-Hospital/application/language/bangla/` contains modified language translation scripts (e.g. `system_syntax_lang.php`).
 - **Database Activation:**
@@ -124,3 +140,60 @@ The workspace contains several pre-configured utilities to assist with testing a
 - **User Selector:**
   - Added to the dropdown flag selector in [login.php](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/views/auth/login.php) mapping to code `bd`.
   - Handled in the dashboard header flag dropdown in [dashboard.php](file:///c:/Users/Rohan/Desktop/hmssaas/Multi-Hospital/application/modules/home/views/dashboard.php). Fixed a bug where display labels in the Patient/Doctor dropdown were hardcoded to 'عربى' (Arabic) by changing them to load `ucfirst($language->language)` dynamically.
+
+---
+
+## 7. 💳 Payment Gateway Architecture
+
+### Supported Gateways
+| Gateway | Status | Credentials Used |
+|---------|--------|-----------------|
+| PayPal | ✅ | APIUsername, APIPassword, APISignature |
+| Stripe | ✅ | secret (Secret Key), publish (Publish Key) |
+| Pay U Money | ✅ | merchant_key, salt |
+| Paystack | ✅ | public_key, secret |
+| SSLCOMMERZ | ✅ | APIUsername (Store ID), APIPassword (Store Password) |
+
+### SSLCOMMERZ DB Column Mapping
+```
+paymentGateway.APIUsername = SSLCOMMERZ Store ID
+paymentGateway.APIPassword = SSLCOMMERZ Store Password
+paymentGateway.status      = 'test' (sandbox) OR 'live'
+```
+
+### SSLCOMMERZ Module Files
+- Controller: `modules/sslcommerz/controllers/Sslcommerz.php`
+- State Table: `sslcommerz_payments_state` (created by migration)
+- Endpoints: `/sslcommerz/initiate_payment`, `/sslcommerz/success`, `/sslcommerz/fail`, `/sslcommerz/cancel`, `/sslcommerz/ipn`
+
+### Sidebar Links (All Panels)
+- **Contact With Us:** `mailto:fctbd1@gmail.com`
+- **Help Center:** `https://help.fstio.com`
+- File: `modules/home/views/menu.php` (lines ~1264-1277 and ~1707-1722)
+
+---
+
+## 8. 🚀 Deployment Playbook
+
+### Production Environment
+- **URL:** `https://hms.fstio.com`
+- **Coolify Dashboard:** `http://36.50.40.224:8000`
+- **Container:** php:8.1-apache (custom Dockerfile)
+
+### Standard Deploy Flow
+1. Make code changes
+2. `git add -A; git commit -m "description"`
+3. `git push origin master`
+4. Coolify auto-deploys (webhook or manual trigger from dashboard)
+
+### One-Time DB Migration
+After first deploy with new SQL migration:
+1. Visit `https://hms.fstio.com/run-migration.php`
+2. Verify output shows `[OK]` for all statements
+3. **DELETE `run-migration.php` from the server immediately after!**
+
+### Known Quirks
+- **PHP 8.1 HMVC:** `MX_Controller` and `MX_Loader` require null-coalescing patches for `controller_suffix` and `object_name`
+- **Composer:** `vendor/` must be built during Docker build (not committed to Git)
+- **Build Context:** `.dockerignore` excludes heavy directories to keep build context ~2 MB
+- **500 Error on Language Switch:** Fixed by patching HMVC null-handling

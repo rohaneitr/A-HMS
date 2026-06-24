@@ -1,136 +1,584 @@
 /**
- * Fast Technologies UI Redesign Stylesheet
+ * A+HMS — Fast Technologies
+ * Modern UI Override Stylesheet
+ * Theme: Purple + Dark Slate (Premium Luxury)
  * File: common/css/custom-style.css
+ *
+ * IMPORTANT: This file is loaded LAST in dashboard.php and only uses CSS
+ * overrides. No PHP or JS functionality is affected.
  */
 
+/* =========================================================
+   1. GOOGLE FONT — Inter (Modern, Professional)
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* =========================================================
+   2. CSS CUSTOM PROPERTIES — Color Palette & Design Tokens
+   ========================================================= */
 :root {
-  --primary-color: #0d6efd;
-  --primary-hover: #0b5ed7;
-  --primary-active: #0a58ca;
-  --primary-rgb: 13, 110, 253;
-  --secondary-color: #6c757d;
-  --secondary-hover: #5c636a;
-  --secondary-active: #565e64;
-  --secondary-rgb: 108, 117, 125;
+  /* Primary — Vibrant Purple */
+  --primary-color:  #7c3aed;
+  --primary-hover:  #6d28d9;
+  --primary-active: #5b21b6;
+  --primary-light:  #ede9fe;
+  --primary-rgb:    124, 58, 237;
+
+  /* Accent — Soft Violet */
+  --accent-color:   #a78bfa;
+  --accent-rgb:     167, 139, 250;
+
+  /* Secondary — Cool Slate */
+  --secondary-color: #475569;
+  --secondary-hover: #334155;
+  --secondary-rgb:   71, 85, 105;
+
+  /* Sidebar & Navbar */
+  --sidebar-bg:       #1e1b4b;   /* Deep Indigo */
+  --sidebar-dark:     #13103a;
+  --sidebar-accent:   #4c1d95;
+  --navbar-bg:        #1e1b4b;
+
+  /* Surface Colors */
+  --body-bg:          #f0effe;   /* Very light lavender */
+  --card-bg:          #ffffff;
+  --card-border:      rgba(124, 58, 237, 0.08);
+  --card-shadow:      0 2px 16px rgba(124, 58, 237, 0.10);
+  --card-shadow-hover:0 8px 32px rgba(124, 58, 237, 0.18);
+
+  /* Status Colors */
+  --success-color: #059669;
+  --warning-color: #d97706;
+  --danger-color:  #dc2626;
+  --info-color:    #0891b2;
+
+  /* Text */
+  --text-heading: #1e1b4b;
+  --text-body:    #374151;
+  --text-muted:   #6b7280;
+
+  /* Border & Radius */
+  --border-color:  #e5e7eb;
+  --radius-sm:     6px;
+  --radius-md:     10px;
+  --radius-lg:     16px;
+  --radius-xl:     24px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-mid:  0.25s ease-in-out;
 }
 
-/* Primary Button Overrides */
+/* =========================================================
+   3. GLOBAL FONT & BODY
+   ========================================================= */
+body,
+h1, h2, h3, h4, h5, h6,
+p, a, span, td, th,
+input, select, textarea, button,
+.btn, .nav-link, .breadcrumb-item,
+label, .card-title, .card-text {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+
+body {
+  background-color: var(--body-bg) !important;
+  color: var(--text-body) !important;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================
+   4. SIDEBAR — Dark Indigo with Purple Accents
+   ========================================================= */
+.main-sidebar,
+.sidebar {
+  background: linear-gradient(180deg, var(--sidebar-bg) 0%, var(--sidebar-dark) 100%) !important;
+}
+
+/* Sidebar top brand area */
+.brand-link {
+  background: linear-gradient(135deg, var(--sidebar-accent), var(--sidebar-bg)) !important;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.2) !important;
+  padding: 14px 16px !important;
+}
+.brand-link:hover {
+  background: linear-gradient(135deg, var(--primary-color), var(--sidebar-accent)) !important;
+}
+.brand-text {
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: -0.3px;
+  color: #ffffff !important;
+}
+
+/* Sidebar nav links */
+.sidebar .nav-link {
+  border-radius: var(--radius-sm) !important;
+  margin: 2px 8px !important;
+  padding: 9px 12px !important;
+  transition: all var(--transition-mid) !important;
+  color: rgba(199, 210, 254, 0.85) !important;
+}
+.sidebar .nav-link p {
+  color: rgba(199, 210, 254, 0.85) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+.sidebar .nav-link:hover {
+  background: rgba(167, 139, 250, 0.15) !important;
+  color: #ffffff !important;
+}
+.sidebar .nav-link:hover p,
+.sidebar .nav-link:hover .nav-icon {
+  color: #ffffff !important;
+}
+.sidebar .nav-link.active,
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active {
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color)) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4) !important;
+  border-radius: var(--radius-sm) !important;
+}
+.sidebar .nav-link.active p,
+.sidebar .nav-link.active .nav-icon {
+  color: #ffffff !important;
+}
+
+/* Sidebar icons */
+.sidebar .nav-icon {
+  color: rgba(167, 139, 250, 0.7) !important;
+  transition: color var(--transition-fast) !important;
+}
+
+/* Sidebar section headers */
+.nav-header {
+  color: rgba(167, 139, 250, 0.5) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  padding: 12px 16px 4px !important;
+}
+
+/* Sidebar treeview submenu */
+.nav-treeview > .nav-item > .nav-link {
+  padding-left: 2rem !important;
+}
+.nav-treeview > .nav-item > .nav-link.active {
+  background: rgba(124, 58, 237, 0.25) !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   5. TOP NAVBAR
+   ========================================================= */
+.main-header.navbar {
+  background: linear-gradient(90deg, var(--navbar-bg), var(--sidebar-accent)) !important;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.3) !important;
+  box-shadow: 0 2px 16px rgba(30, 27, 75, 0.25) !important;
+  padding: 0 12px !important;
+}
+.main-header .navbar-nav .nav-link {
+  color: rgba(199, 210, 254, 0.85) !important;
+  transition: color var(--transition-fast) !important;
+}
+.main-header .navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+}
+.main-header .navbar-brand {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   6. CONTENT HEADER / BREADCRUMB
+   ========================================================= */
+.content-header h1 {
+  color: var(--text-heading) !important;
+  font-weight: 700 !important;
+  font-size: 1.4rem !important;
+}
+.breadcrumb {
+  background: transparent !important;
+  padding: 0 !important;
+}
+.breadcrumb-item a {
+  color: var(--primary-color) !important;
+  font-weight: 500 !important;
+}
+.breadcrumb-item.active {
+  color: var(--text-muted) !important;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+  color: var(--text-muted) !important;
+}
+
+/* =========================================================
+   7. CARDS — Modern Rounded Cards
+   ========================================================= */
+.card {
+  border: 1px solid var(--card-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--card-shadow) !important;
+  background-color: var(--card-bg) !important;
+  transition: box-shadow var(--transition-mid), transform var(--transition-mid) !important;
+}
+.card:hover {
+  box-shadow: var(--card-shadow-hover) !important;
+}
+.card-header {
+  border-radius: var(--radius-md) var(--radius-md) 0 0 !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  padding: 14px 20px !important;
+  font-weight: 600 !important;
+}
+.card-title {
+  font-weight: 600 !important;
+  color: var(--text-heading) !important;
+  font-size: 1rem !important;
+}
+.card-body {
+  padding: 20px !important;
+}
+
+/* Colored card headers */
+.card-primary > .card-header,
+.bg-primary { background-color: var(--primary-color) !important; color: #fff !important; }
+.card-success > .card-header,
+.bg-success  { background-color: var(--success-color) !important; color: #fff !important; }
+.card-warning > .card-header,
+.bg-warning  { background-color: var(--warning-color) !important; color: #fff !important; }
+.card-danger > .card-header,
+.bg-danger   { background-color: var(--danger-color) !important; color: #fff !important; }
+.card-info > .card-header,
+.bg-info     { background-color: var(--info-color) !important; color: #fff !important; }
+
+/* Card outline top border */
+.card-primary.card-outline { border-top: 3px solid var(--primary-color) !important; }
+
+/* Small info boxes */
+.info-box {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--card-shadow) !important;
+  border: 1px solid var(--card-border) !important;
+  transition: transform var(--transition-mid), box-shadow var(--transition-mid) !important;
+}
+.info-box:hover { transform: translateY(-2px) !important; box-shadow: var(--card-shadow-hover) !important; }
+.info-box-icon {
+  border-radius: var(--radius-md) 0 0 var(--radius-md) !important;
+  line-height: 72px !important;
+}
+.bg-purple,
+.info-box-icon.bg-primary { background-color: var(--primary-color) !important; }
+
+/* =========================================================
+   8. BUTTONS — Rounded & Smooth
+   ========================================================= */
+.btn {
+  border-radius: var(--radius-sm) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  padding: 7px 16px !important;
+  transition: all var(--transition-mid) !important;
+  letter-spacing: 0.1px;
+}
 .btn-primary {
-  background-color: var(--primary-color) !important;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
   border-color: var(--primary-color) !important;
   color: #fff !important;
-  transition: all 0.2s ease-in-out;
 }
 .btn-primary:hover,
 .btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.open > .dropdown-toggle.btn-primary {
-  background-color: var(--primary-hover) !important;
+.btn-primary:active {
+  background: linear-gradient(135deg, var(--primary-hover), var(--primary-active)) !important;
   border-color: var(--primary-hover) !important;
-  color: #fff !important;
-  box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.5) !important;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4) !important;
+  transform: translateY(-1px);
 }
 
-/* Secondary Button Overrides */
 .btn-secondary {
   background-color: var(--secondary-color) !important;
   border-color: var(--secondary-color) !important;
   color: #fff !important;
-  transition: all 0.2s ease-in-out;
 }
-.btn-secondary:hover,
-.btn-secondary:focus,
-.btn-secondary:active,
-.btn-secondary.active {
+.btn-secondary:hover {
   background-color: var(--secondary-hover) !important;
-  border-color: var(--secondary-hover) !important;
-  color: #fff !important;
-  box-shadow: 0 0 0 0.2rem rgba(var(--secondary-rgb), 0.5) !important;
+  box-shadow: 0 4px 12px rgba(var(--secondary-rgb), 0.3) !important;
+  transform: translateY(-1px);
 }
 
-/* Sidebar Navigation Active Element Overrides */
-.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
-.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active,
-.nav-pills .nav-link.active {
-  background-color: var(--primary-color) !important;
-  color: #fff !important;
+.btn-success  { background-color: var(--success-color) !important; border-color: var(--success-color) !important; color: #fff !important; }
+.btn-warning  { background-color: var(--warning-color) !important; border-color: var(--warning-color) !important; color: #fff !important; }
+.btn-danger   { background-color: var(--danger-color) !important;  border-color: var(--danger-color) !important;  color: #fff !important; }
+.btn-info     { background-color: var(--info-color) !important;    border-color: var(--info-color) !important;    color: #fff !important; }
+
+.btn-success:hover, .btn-warning:hover, .btn-danger:hover, .btn-info:hover {
+  opacity: 0.88 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
 }
 
-/* Sidebar Navigation Hover Overrides */
-.nav-sidebar .nav-item > .nav-link:hover {
-  background-color: rgba(var(--primary-rgb), 0.1) !important;
+/* =========================================================
+   9. FORM CONTROLS — Modern Inputs
+   ========================================================= */
+.form-control,
+.form-select {
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid var(--border-color) !important;
+  font-size: 13.5px !important;
+  padding: 9px 12px !important;
+  color: var(--text-body) !important;
+  background-color: #fafafa !important;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast) !important;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15) !important;
+  background-color: #ffffff !important;
+}
+.form-control::placeholder { color: #9ca3af !important; }
+
+label {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  margin-bottom: 5px !important;
+}
+
+/* =========================================================
+   10. TABLES — Clean & Modern
+   ========================================================= */
+.table {
+  border-radius: var(--radius-md) !important;
+  overflow: hidden !important;
+}
+.table thead th {
+  background: linear-gradient(135deg, var(--sidebar-bg), var(--sidebar-accent)) !important;
+  color: rgba(199, 210, 254, 0.9) !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  padding: 12px 16px !important;
+  border: none !important;
+}
+.table tbody tr {
+  transition: background-color var(--transition-fast) !important;
+}
+.table tbody tr:hover {
+  background-color: var(--primary-light) !important;
+}
+.table tbody td {
+  padding: 11px 16px !important;
+  vertical-align: middle !important;
+  border-top: 1px solid var(--border-color) !important;
+  font-size: 13.5px !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(124, 58, 237, 0.02) !important;
+}
+
+/* =========================================================
+   11. BADGES & LABELS
+   ========================================================= */
+.badge {
+  border-radius: 20px !important;
+  padding: 4px 10px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+.badge-primary, .badge.bg-primary { background-color: var(--primary-color) !important; color: #fff !important; }
+.badge-success, .badge.bg-success { background-color: var(--success-color) !important; color: #fff !important; }
+.badge-warning, .badge.bg-warning { background-color: var(--warning-color) !important; color: #fff !important; }
+.badge-danger,  .badge.bg-danger  { background-color: var(--danger-color) !important;  color: #fff !important; }
+.badge-info,    .badge.bg-info    { background-color: var(--info-color) !important;     color: #fff !important; }
+
+/* =========================================================
+   12. LINKS
+   ========================================================= */
+a { color: var(--primary-color) !important; text-decoration: none !important; }
+a:hover { color: var(--primary-hover) !important; text-decoration: underline !important; }
+
+/* =========================================================
+   13. PAGINATION
+   ========================================================= */
+.page-item.active .page-link {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+  border-color: var(--primary-color) !important;
+  border-radius: var(--radius-sm) !important;
+}
+.page-link {
   color: var(--primary-color) !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--border-color) !important;
+  margin: 0 2px !important;
+  font-size: 13px !important;
 }
+.page-link:hover { background-color: var(--primary-light) !important; color: var(--primary-hover) !important; }
 
-/* Base Link State Overrides */
-a {
-  color: var(--primary-color);
+/* =========================================================
+   14. ALERTS
+   ========================================================= */
+.alert {
+  border-radius: var(--radius-md) !important;
+  border: none !important;
+  font-size: 13.5px !important;
+  padding: 14px 18px !important;
 }
-a:hover {
-  color: var(--primary-hover);
-}
+.alert-primary { background-color: var(--primary-light) !important; color: var(--primary-active) !important; }
 
-/* Form Controls Focus State Overrides */
-.form-control:focus {
-  border-color: rgba(var(--primary-rgb), 0.6) !important;
-  box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.25) !important;
+/* =========================================================
+   15. LOGIN PAGE — Premium Gradient
+   ========================================================= */
+.login-page,
+body.login-page {
+  background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 40%, #7c3aed 100%) !important;
+  min-height: 100vh !important;
 }
-
-/* Background & Utility Class Overrides */
-.bg-primary {
+.login-box {
+  background: transparent !important;
+}
+.login-box .card {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 20px 60px rgba(30, 27, 75, 0.5) !important;
+  border: 1px solid rgba(167, 139, 250, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+.login-box .card-primary {
+  border-top: 4px solid var(--accent-color) !important;
+}
+.login-box .card-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+  padding: 20px !important;
+}
+.login-logo a,
+.login-box .login-logo a {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 1.8rem !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+  text-decoration: none !important;
+}
+.login-box .icheck-primary > input:first-child:checked + label::before {
   background-color: var(--primary-color) !important;
-}
-.bg-secondary {
-  background-color: var(--secondary-color) !important;
-}
-.text-primary {
-  color: var(--primary-color) !important;
-}
-.text-secondary {
-  color: var(--secondary-color) !important;
+  border-color: var(--primary-color) !important;
 }
 
-/* Checkbox & Radio Alignment Overrides */
+/* =========================================================
+   16. MODAL
+   ========================================================= */
+.modal-content {
+  border-radius: var(--radius-lg) !important;
+  border: none !important;
+  box-shadow: 0 20px 60px rgba(30, 27, 75, 0.3) !important;
+}
+.modal-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+  color: #fff !important;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+  border-bottom: none !important;
+  padding: 16px 20px !important;
+}
+.modal-header .modal-title { color: #fff !important; font-weight: 700 !important; }
+.modal-header .close       { color: #fff !important; opacity: 0.8 !important; }
+
+/* =========================================================
+   17. SWEETALERT
+   ========================================================= */
+.swal2-styled.swal2-confirm {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+  border-left-color: var(--primary-color) !important;
+  border-right-color: var(--primary-color) !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+.swal2-popup { border-radius: var(--radius-lg) !important; }
+
+/* =========================================================
+   18. SIDEBAR USER PANEL
+   ========================================================= */
+.user-panel {
+  border-bottom: 1px solid rgba(167, 139, 250, 0.2) !important;
+  padding: 12px 16px !important;
+}
+.user-panel .info a {
+  color: rgba(199, 210, 254, 0.9) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+.user-panel .info a:hover {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* =========================================================
+   19. SCROLLBAR — Custom Purple
+   ========================================================= */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f0effe; }
+::-webkit-scrollbar-thumb { background: rgba(124, 58, 237, 0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
+
+/* =========================================================
+   20. ICHECK (Custom Checkboxes)
+   ========================================================= */
 .icheck-primary > input:first-child:checked + label::before,
 .icheck-primary > input:first-child:checked + input[type="hidden"] + label::before {
   background-color: var(--primary-color) !important;
   border-color: var(--primary-color) !important;
 }
 
-/* SweetAlert Overrides */
-.swal2-styled.swal2-confirm {
-  background-color: var(--primary-color) !important;
-  border-left-color: var(--primary-color) !important;
-  border-right-color: var(--primary-color) !important;
-}
+/* =========================================================
+   21. TEXT & UTILITY OVERRIDES
+   ========================================================= */
+.text-primary   { color: var(--primary-color) !important; }
+.text-secondary { color: var(--secondary-color) !important; }
+.text-success   { color: var(--success-color) !important; }
+.text-warning   { color: var(--warning-color) !important; }
+.text-danger    { color: var(--danger-color) !important; }
+.text-info      { color: var(--info-color) !important; }
+.text-muted     { color: var(--text-muted) !important; }
 
-/* Card Header Outline Accent Overrides */
-.card-primary.card-outline {
-  border-top: 3px solid var(--primary-color) !important;
-}
+.bg-secondary { background-color: var(--secondary-color) !important; }
 
-/* Pagination Accent Overrides */
-.page-item.active .page-link {
-  background-color: var(--primary-color) !important;
+/* =========================================================
+   22. SELECT2 DROPDOWNS
+   ========================================================= */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default.select2-container--open .select2-selection--single {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15) !important;
+}
+.select2-dropdown {
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm) !important;
   border-color: var(--primary-color) !important;
 }
-.page-link {
-  color: var(--primary-color);
-}
-.page-link:hover {
-  color: var(--primary-hover);
+.select2-container--default .select2-results__option--highlighted {
+  background-color: var(--primary-color) !important;
 }
 
-/* Branding Wrapper & Navigation Bar Borders */
-.brand-link {
-  border-bottom: 1px solid rgba(var(--primary-rgb), 0.2) !important;
-}
-.login-box .card-primary {
-  border-top: 5px solid var(--primary-color) !important;
-}
-
-/* Match Loader animation color to the primary brand color */
+/* =========================================================
+   23. LOADER / SPINNER
+   ========================================================= */
 .loader {
   border-top: 16px solid var(--primary-color) !important;
+}
+
+/* =========================================================
+   24. SMALL RESPONSIVE TWEAKS
+   ========================================================= */
+@media (max-width: 768px) {
+  .info-box { margin-bottom: 12px !important; }
+  .card-body { padding: 14px !important; }
+  .btn { padding: 6px 12px !important; font-size: 12px !important; }
 }
