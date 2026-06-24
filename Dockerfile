@@ -27,12 +27,14 @@ WORKDIR /var/www/html
 # Copy application source from Multi-Hospital/ subdirectory
 COPY Multi-Hospital/ /var/www/html/
 
-# Fix file permissions for Apache (fast single chown, no slow recursive find)
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html \
+# Fix file permissions only for writable directories (logs, cache, uploads)
+RUN chown -R www-data:www-data /var/www/html/application/logs \
+    && chown -R www-data:www-data /var/www/html/application/cache \
+    && chown -R www-data:www-data /var/www/html/uploads \
     && chmod -R 775 /var/www/html/application/logs \
     && chmod -R 775 /var/www/html/application/cache \
     && chmod -R 775 /var/www/html/uploads
+
 
 # ci_sessions table is auto-created by docker-entrypoint.sh on container start
 
