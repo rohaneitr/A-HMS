@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
+    mariadb-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure and install PHP extensions
@@ -34,6 +35,9 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/uploads
 
 # ci_sessions table is auto-created by docker-entrypoint.sh on container start
+
+# Copy database SQL dump for first-run import
+COPY Database/database_tables.sql /docker-entrypoint-initdb.d/database_tables.sql
 
 # Copy entrypoint script that creates ci_sessions table before Apache starts
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
