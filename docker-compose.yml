@@ -9,7 +9,7 @@ services:
       MARIADB_ROOT_PASSWORD: rootpassword
       MARIADB_DATABASE: hmssaas
     ports:
-      - "3306:3306"
+      - "${DB_PORT_BINDING:-3306:3306}"
     volumes:
       - db_data:/var/lib/mysql
       # Mount sql dumps to initialize the database (alphabetical order)
@@ -21,7 +21,8 @@ services:
     container_name: hms-web
     restart: always
     ports:
-      - "8080:80"
+      - "${WEB_PORT_BINDING:-8080:80}"
+
     environment:
       CI_ENV: production
       DB_HOST: db
