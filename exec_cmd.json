@@ -1,0 +1,3 @@
+{
+  "command": "php -r \"$m=new mysqli('swj9tsgd9awqhqwb59qa7goc','root','HmsDB@Secure2024!','hmssaas');if($m->connect_error){echo 'ERR:'.$m->connect_error;}else{$m->query('CREATE TABLE IF NOT EXISTS ci_sessions(id varchar(128) NOT NULL,ip_address varchar(45) NOT NULL,timestamp int(10) unsigned DEFAULT 0 NOT NULL,data blob NOT NULL,PRIMARY KEY(id),KEY ci_sessions_timestamp(timestamp))ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');$r=$m->query('SHOW TABLES LIKE \\'ci_sessions\\'');echo 'TABLE_EXISTS:'.($r->num_rows>0?'YES':'NO');}\""
+}

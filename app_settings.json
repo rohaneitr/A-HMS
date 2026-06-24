@@ -1,0 +1,17 @@
+{
+  "docker_registry_image_name": null,
+  "docker_registry_image_tag": null,
+  "dockerfile": null,
+  "dockerfile_location": "/Dockerfile",
+  "docker_compose_location": null,
+  "docker_compose_raw": null,
+  "docker_compose_custom_start_command": null,
+  "docker_compose_custom_build_command": null,
+  "build_pack": "dockerfile",
+  "static_image": null,
+  "install_command": null,
+  "build_command": null,
+  "start_command": null,
+  "post_deployment_command": "echo done",
+  "post_deployment_command_container": "hms-app"
+}

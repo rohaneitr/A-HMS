@@ -111,6 +111,23 @@
                                                                                                                             }
                                                                                                                             ?>' required="">
                                     </div>
+                                <?php } ?> <?php if ($settings->name == "SSLCOMMERZ") { ?>
+                                    <div class="form-group">
+                                        <label for="APIUsername"><?php echo lang('store_id'); ?> / Store ID &ast;</label>
+                                        <input type="text" class="form-control form-control-lg" name="APIUsername" value="<?php
+                                                                                                                            if (!empty($settings->APIUsername)) {
+                                                                                                                                echo $settings->APIUsername;
+                                                                                                                            }
+                                                                                                                            ?>" placeholder="Your SSLCOMMERZ Store ID" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="APIPassword">Store Password / API Password &ast;</label>
+                                        <input type="text" class="form-control form-control-lg" name="APIPassword" value='<?php
+                                                                                                                            if (!empty($settings->APIPassword)) {
+                                                                                                                                echo $settings->APIPassword;
+                                                                                                                            }
+                                                                                                                            ?>' placeholder="Your SSLCOMMERZ Store Password" required="">
+                                    </div>
                                 <?php } ?>
                                 <?php if ($settings->name == "Stripe") { ?>
                                     <div class="form-group">

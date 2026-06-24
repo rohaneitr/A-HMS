@@ -292,6 +292,17 @@ class Request extends MX_Controller {
 
             $this->pgateway_model->addPaymentGatewaySettings($data_pgateway_paystack);
 
+            $data_pgateway_sslcommerz = array(
+                'name'        => 'SSLCOMMERZ',
+                'APIUsername' => 'Your SSLCOMMERZ Store ID',
+                'APIPassword' => 'Your SSLCOMMERZ Store Password',
+                'status'      => 'test',
+                'hospital_id' => $hospital_user_id
+            );
+
+            $this->pgateway_model->addPaymentGatewaySettings($data_pgateway_sslcommerz);
+
+
             $data_email_settings = array(
                 'admin_email' => 'Admin Email', // Sandbox / testing mode option.
                 'hospital_id' => $hospital_user_id

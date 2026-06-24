@@ -78,6 +78,10 @@ class pgateway extends MX_Controller {
             // Validating Email Field
             $this->form_validation->set_rules('APISignature', 'APISignature Signature', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         }
+        if ($pgateway->name == 'SSLCOMMERZ') {
+            $this->form_validation->set_rules('APIUsername', 'Store ID', 'trim|required|min_length[1]|max_length[200]|xss_clean');
+            $this->form_validation->set_rules('APIPassword', 'Store Password', 'trim|required|min_length[1]|max_length[200]|xss_clean');
+        }
 
         if ($this->form_validation->run() == FALSE) {
             $data = array();
@@ -117,6 +121,13 @@ class pgateway extends MX_Controller {
                     'APIUsername' => $APIUsername,
                     'APIPassword' => $APIPassword,
                     'APISignature' => $APIUSignature,
+                    'status' => $status
+                );
+            }
+            if ($pgateway->name == 'SSLCOMMERZ') {
+                $data = array(
+                    'APIUsername' => $APIUsername,
+                    'APIPassword' => $APIPassword,
                     'status' => $status
                 );
             }

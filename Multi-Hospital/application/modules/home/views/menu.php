@@ -1262,7 +1262,7 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
                 </li>
             <?php } ?>
             <li class="nav-item">
-                <a class="nav-link text-white" target="_blank" href="http://support.codearistos.net/help-center/articles/10/11/27/introduction">
+                <a class="nav-link text-white" target="_blank" href="https://help.fstio.com">
                     <i class="text-secondary nav-icon fas fa-question-circle"></i>
                     <p><?php echo lang('help_center'); ?></p>
                 </a>
@@ -1270,7 +1270,7 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
 
 
             <li class="nav-item">
-                <a class="nav-link text-white" href="mailto:rizvi.mahmud.plabon@gmail.com">
+                <a class="nav-link text-white" href="mailto:fctbd1@gmail.com">
                     <i class="text-secondary nav-icon fas fa-envelope"></i>
                     <p><?php echo lang('contact_us'); ?></p>
                 </a>
@@ -1706,7 +1706,7 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
 
 <?php if ($this->ion_auth->in_group(array('superadmin'))) { ?>
     <li class="nav-item">
-        <a class="nav-link text-white" target="_blank" href="http://support.codearistos.net/help-center/articles/10/11/27/introduction">
+        <a class="nav-link text-white" target="_blank" href="https://help.fstio.com">
             <i class="text-secondary nav-icon fas fa-question-circle"></i>
             <p><?php echo lang('help_center'); ?></p>
         </a>
@@ -1714,7 +1714,7 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
 
 
     <li class="nav-item">
-        <a class="nav-link text-white" href="mailto:rizvi.mahmud.plabon@gmail.com">
+        <a class="nav-link text-white" href="mailto:fctbd1@gmail.com">
             <i class="text-secondary nav-icon fas fa-envelope"></i>
             <p><?php echo lang('contact_us'); ?></p>
         </a>
