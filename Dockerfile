@@ -32,7 +32,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY Multi-Hospital/ /var/www/html/
 
 # Install composer dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # Fix file permissions only for writable directories (logs, cache, uploads)
 RUN chown -R www-data:www-data /var/www/html/application/logs \
