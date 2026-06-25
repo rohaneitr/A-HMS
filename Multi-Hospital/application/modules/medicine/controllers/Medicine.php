@@ -338,7 +338,7 @@ class Medicine extends MX_Controller
         $order = $this->input->post("order");
         $columns_valid = array(
             "0" => "id",
-            "1" => "namee",
+            "1" => "name",
             "2" => "category",
             "3" => "box",
             "4" => "price",
