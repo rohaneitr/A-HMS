@@ -14,41 +14,68 @@ try {
     echo "Connected successfully to database: $dbname\n\n";
 
     // 1. Get hospital_id for fast@hospital.com
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT hospital_id FROM users WHERE email = ?");
     $stmt->execute(['fast@hospital.com']);
     $userRow = $stmt->fetch();
     if (!$userRow) {
         echo "User fast@hospital.com not found!\n";
         exit;
     }
-    echo "User Details:\n";
-    echo "ID: " . $userRow['id'] . "\n";
-    echo "Hospital ID: " . $userRow['hospital_id'] . "\n\n";
     $hospital_id = $userRow['hospital_id'];
+    echo "Hospital ID: $hospital_id\n\n";
 
-    // 2. Query count of medicines for this hospital
-    $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM medicine WHERE hospital_id = ?");
+    // Get currency settings
+    $stmt = $pdo->prepare("SELECT currency FROM settings WHERE hospital_id = ?");
     $stmt->execute([$hospital_id]);
-    echo "Medicine count for hospital $hospital_id: " . $stmt->fetch()['count'] . "\n\n";
+    $settingsRow = $stmt->fetch();
+    $currency = $settingsRow ? $settingsRow['currency'] : '$';
 
-    // 3. Select first 5 medicines
-    $stmt = $pdo->prepare("SELECT * FROM medicine WHERE hospital_id = ? LIMIT 5");
+    // 2. Fetch ALL medicines for this hospital
+    $stmt = $pdo->prepare("SELECT * FROM medicine WHERE hospital_id = ?");
     $stmt->execute([$hospital_id]);
-    echo "First 5 medicines:\n";
-    print_r($stmt->fetchAll());
-    echo "\n";
+    $medicines = $stmt->fetchAll();
 
-    // 4. Test searching query
-    $search = 'Napa';
-    echo "Testing search query with '$search':\n";
-    try {
-        $q = "SELECT * FROM medicine WHERE hospital_id = ? AND (id LIKE ? OR category LIKE ? OR name LIKE ? OR e_date LIKE ? OR generic LIKE ? OR company LIKE ? OR effects LIKE ?)";
-        $stmt = $pdo->prepare($q);
-        $likeSearch = "%$search%";
-        $stmt->execute([$hospital_id, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch]);
-        echo "Search query succeeded. Match count: " . count($stmt->fetchAll()) . "\n";
-    } catch (Exception $e) {
-        echo "Search query failed: " . $e->getMessage() . "\n";
+    echo "Total medicines found: " . count($medicines) . "\n\n";
+
+    $info = [];
+    $i = 0;
+    foreach ($medicines as $medicine) {
+        $i++;
+        
+        $row_data = [
+            $i,
+            $medicine['name'],
+            $medicine['category'],
+            $medicine['box'],
+            $currency . $medicine['price'],
+            $currency . $medicine['s_price'],
+            $medicine['quantity'],
+            $medicine['generic'],
+            $medicine['company'],
+            $medicine['effects'],
+            $medicine['e_date'],
+            'options_placeholder'
+        ];
+
+        // Test json_encode on this single row
+        $encoded = json_encode($row_data);
+        if ($encoded === false) {
+            echo "ERROR: Row $i (Medicine ID: {$medicine['id']}) failed json_encode!\n";
+            echo "Details:\n";
+            print_r($medicine);
+            echo "JSON Error: " . json_last_error_msg() . "\n\n";
+        }
+        
+        $info[] = $row_data;
+    }
+
+    // Test json_encode on entire dataset
+    echo "Testing json_encode on the full output array...\n";
+    $final_json = json_encode($info);
+    if ($final_json === false) {
+        echo "FAIL: Full output failed json_encode! Error: " . json_last_error_msg() . "\n";
+    } else {
+        echo "SUCCESS: Full output successfully json_encoded! Size: " . strlen($final_json) . " bytes\n";
     }
 
 } catch (PDOException $e) {
